@@ -1,0 +1,4 @@
+com\automation\tests\LoginPageTest.class
+com\automation\pages\LoginPage.class
+com\automation\config\ResourcesConfig.class
+com\automation\config\BaseAppConfig.class
