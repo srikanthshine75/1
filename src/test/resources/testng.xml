@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="JIRA Login Tests" parallel="false" thread-count="1">
-    <test name="Login Page Tests" preserve-order="true">
+<suite name="Google Test Suite" parallel="false" thread-count="1">
+    <test name="Open Google Test">
         <classes>
             <class name="com.automation.tests.LoginPageTest">
                 <methods>
-                    <include name="testLoginPageIsOpened"/>
+                    <include name="testOpenGooglePage"/>
                 </methods>
             </class>
         </classes>

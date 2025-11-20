@@ -1,10 +1,6 @@
 package com.automation.config;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -17,74 +13,23 @@ import java.util.concurrent.TimeUnit;
 public class BaseAppConfig {
     
     protected WebDriver driver;
-    private String browserName;
     private String appUrl;
     private long implicitWait;
     private long pageLoadTimeout;
     
     public BaseAppConfig() {
-        this.browserName = ResourcesConfig.getProperty("browser", "edge");
         this.appUrl = ResourcesConfig.getProperty("app.url");
         this.implicitWait = Long.parseLong(ResourcesConfig.getProperty("implicit.wait"));
         this.pageLoadTimeout = Long.parseLong(ResourcesConfig.getProperty("page.load.timeout"));
     }
     
     /**
-     * Initialize WebDriver based on browser type
+     * Initialize Edge WebDriver
      */
     public WebDriver initializeDriver() {
-        switch (browserName.toLowerCase()) {
-            case "chrome":
-                driver = initializeChromeDriver();
-                break;
-            case "firefox":
-                driver = initializeFirefoxDriver();
-                break;
-            case "edge":
-                driver = initializeEdgeDriver();
-                break;
-            default:
-                throw new IllegalArgumentException("Browser: " + browserName + " is not supported");
-        }
-        
+        driver = initializeEdgeDriver();
         configureDriver();
         return driver;
-    }
-    
-    /**
-     * Initialize Chrome Driver
-     */
-    private WebDriver initializeChromeDriver() {
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions options = new ChromeOptions();
-        
-        // Add options from config
-        if (Boolean.parseBoolean(ResourcesConfig.getProperty("headless.mode"))) {
-            options.addArguments("--headless");
-        }
-        
-        options.addArguments("--start-maximized");
-        options.addArguments("--disable-notifications");
-        options.addArguments("--disable-popup-blocking");
-        options.addArguments("--disable-default-apps");
-        
-        return new ChromeDriver(options);
-    }
-    
-    /**
-     * Initialize Firefox Driver
-     */
-    private WebDriver initializeFirefoxDriver() {
-        WebDriverManager.firefoxdriver().setup();
-        FirefoxOptions options = new FirefoxOptions();
-        
-        if (Boolean.parseBoolean(ResourcesConfig.getProperty("headless.mode"))) {
-            options.addArguments("--headless");
-        }
-        
-        options.addArguments("--start-maximized");
-        
-        return new FirefoxDriver(options);
     }
     
     /**
@@ -167,10 +112,4 @@ public class BaseAppConfig {
         return appUrl;
     }
     
-    /**
-     * Get browser name
-     */
-    public String getBrowserName() {
-        return browserName;
-    }
 }
